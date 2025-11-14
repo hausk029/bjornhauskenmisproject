@@ -1,0 +1,175 @@
+/* Game-specific styles extracted from the provided HTML */
+:root{
+    --primary-color: #2d3436;
+    --accent-color: #8B0000;
+    --bg-gradient: linear-gradient(135deg, #DAA520, #8B0000);
+    --success-color: #DAA520;
+    --warning-color: #FFD700;
+    --danger-color: #8B0000;
+}
+
+*{box-sizing:border-box}
+
+.game-container{
+    min-height:100vh;
+    display:grid;
+    place-items:center;
+    padding:2rem;
+    background:var(--bg-gradient);
+    color:var(--primary-color);
+}
+
+.game-card{
+    background:rgba(255,255,255,0.95);
+    backdrop-filter:blur(10px);
+    padding:3rem;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+    text-align:center;
+    transform-origin:center;
+    animation:fadeIn 1s ease-out;
+    max-width:500px;
+    width:100%;
+}
+
+.game-title{
+    font-size:2.5rem;
+    margin-bottom:1rem;
+    background:var(--bg-gradient);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    opacity:0;
+    animation:slideDown 0.8s ease-out forwards;
+}
+
+.game-subtitle{font-size:1.1rem;color:#636e72;margin-bottom:2rem;opacity:0;animation:slideDown 0.8s ease-out 0.2s forwards}
+
+.score-board{display:flex;justify-content:space-around;margin-bottom:2rem;opacity:0;animation:slideUp 0.8s ease-out 0.4s forwards}
+.score-item{text-align:center;padding:1rem;background:rgba(9,132,227,0.08);border-radius:15px;min-width:100px}
+.score-label{font-size:0.9rem;color:#636e72;margin-bottom:0.5rem}
+.score-value{font-size:1.5rem;font-weight:700;color:var(--accent-color)}
+
+.current-player{font-size:1.2rem;margin-bottom:1.5rem;padding:0.8rem 1.5rem;background:rgba(0,184,148,0.08);border-radius:25px;display:inline-block;opacity:0;animation:slideUp 0.8s ease-out 0.6s forwards}
+
+.game-message{font-size:1.3rem;font-weight:700;margin:1rem 0;padding:1rem;border-radius:15px;opacity:0;transform:translateY(20px);transition:all 0.5s ease}
+.game-message.show{opacity:1;transform:translateY(0)}
+.game-message.win{background:rgba(0,184,148,0.12);color:var(--success-color)}
+.game-message.draw{background:rgba(253,203,110,0.12);color:var(--warning-color)}
+
+.game-board{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:2rem auto;max-width:300px;opacity:0;animation:slideUp 0.8s ease-out 0.8s forwards}
+.cell{width:80px;height:80px;background:white;border:3px solid #ddd;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:700;cursor:pointer;transition:all 0.3s ease;position:relative;overflow:hidden}
+.cell:hover{transform:scale(1.05);box-shadow:0 5px 15px rgba(9,132,227,0.3);border-color:var(--accent-color)}
+.cell.x{color:var(--danger-color);background:rgba(139,0,0,0.06)}
+.cell.o{color:var(--success-color);background:rgba(218,165,32,0.06)}
+.cell .icon-image{width:60%;height:60%;object-fit:contain;pointer-events:none;user-select:none;filter:drop-shadow(0 2px 2px rgba(0,0,0,0.15))}
+.cell svg{width:40px;height:40px;fill:currentColor}
+.cell.winning{animation:pulse 0.6s ease-in-out;background:rgba(253,203,110,0.3);border-color:var(--warning-color)}
+
+.game-controls{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2rem;opacity:0;animation:slideUp 0.8s ease-out 1s forwards}
+.button{padding:1rem 2rem;border:none;border-radius:50px;background:var(--bg-gradient);color:white;font-size:1rem;cursor:pointer;transition:transform 0.3s ease,box-shadow 0.3s ease;text-decoration:none}
+.button:hover{transform:translateY(-3px);box-shadow:0 5px 15px rgba(9,132,227,0.4)}
+.button.secondary{background:linear-gradient(135deg,#636e72,#2d3436)}
+
+.theme-toggle{position:fixed;top:20px;right:20px;background:white;border:none;padding:10px;border-radius:50%;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,0.1);transition:transform 0.3s ease}
+.theme-toggle:hover{transform:rotate(180deg)}
+
+/* Top controls grouping */
+.top-controls{
+    position:fixed;
+    top:16px;
+    right:16px;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    z-index:9999;
+}
+
+.icon-button{
+    background:rgba(255,255,255,0.95);
+    border:0;
+    padding:8px 10px;
+    border-radius:8px;
+    cursor:pointer;
+    box-shadow:var(--shadow-sm,0 2px 6px rgba(0,0,0,0.08));
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+}
+.icon-button:hover{transform:translateY(-3px);box-shadow:var(--shadow-md,0 6px 12px rgba(0,0,0,0.12))}
+
+.volume-slider{width:110px;border-radius:6px}
+select{background:rgba(255,255,255,0.95);border:1px solid rgba(0,0,0,0.06);padding:6px;border-radius:6px}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* Preloader */
+.preloader{
+    position:fixed;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(0,0,0,0.45);
+    z-index:10000;
+    transition:opacity 0.3s ease, visibility 0.3s ease;
+}
+.preloader[aria-hidden="true"]{
+    opacity:0;visibility:hidden;pointer-events:none;
+}
+.spinner{
+    width:64px;height:64px;border-radius:50%;
+    background:conic-gradient(#ffffff, rgba(255,255,255,0.6));
+    animation:spin 1s linear infinite;
+    box-shadow:0 8px 30px rgba(0,0,0,0.2);
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+
+.dark-mode{--bg-gradient:linear-gradient(135deg,#4A0000,#2F0000);--primary-color:#ffffff}
+.dark-mode .game-card{background:rgba(45,52,54,0.95);color:white}
+.dark-mode .game-subtitle{color:#dfe6e9}
+.dark-mode .cell{background:rgba(255,255,255,0.05);border-color:#555}
+
+/* Focus styles for keyboard navigation */
+.cell:focus{
+    outline: 3px solid rgba(79,70,229,0.25);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(79,70,229,0.12);
+}
+
+/* Improve contrast for focused & winning cells */
+.cell.winning:focus{
+    outline-color: rgba(253,203,110,0.6);
+}
+.dark-mode .theme-toggle{background:#2d3436;color:white}
+
+@media (max-width:768px){
+    .game-card{padding:2rem;margin:1rem}
+    .game-title{font-size:2rem}
+    .cell{width:70px;height:70px;font-size:1.5rem}
+    .game-controls{flex-direction:column}
+}
+
+/* AI thinking indicator (small on-board, not the full preloader) */
+.ai-thinking{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin-top:1rem;
+    opacity:0;
+    transform:translateY(6px);
+    transition:opacity 220ms ease, transform 220ms ease;
+    pointer-events:none;
+}
+.ai-thinking.visible{
+    opacity:1;
+    transform:translateY(0);
+}
+.ai-thinking .small-spinner{
+    width:18px;height:18px;border-radius:50%;background:conic-gradient(#ffffff, rgba(255,255,255,0.6));box-shadow:0 6px 12px rgba(0,0,0,0.12);animation:spin 0.9s linear infinite;
+}
+.ai-thinking .ai-text{font-size:0.95rem;color:var(--primary-color);opacity:0.95}

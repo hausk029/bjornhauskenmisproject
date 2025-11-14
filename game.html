@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Tic Tac Toe — Bjorn Hausken</title>
+
+    <!-- Core styles (shared + modern) -->
+    <link rel="stylesheet" href="CSS/shared.css">
+    <link rel="stylesheet" href="CSS/modern.css">
+
+    <!-- Game specific styles -->
+    <link rel="stylesheet" href="CSS/game.css">
+</head>
+<body>
+    <div id="preloader" class="preloader" aria-hidden="false">
+        <div class="spinner" aria-hidden="true"></div>
+    </div>
+
+    <div class="top-controls">
+        <button class="icon-button theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌓</button>
+        <button class="icon-button" id="musicToggle" aria-label="Toggle music">🎵</button>
+        <button class="icon-button" id="sfxToggle" aria-label="Toggle sfx">🔊</button>
+        <label for="musicVolume" class="sr-only">Music volume</label>
+        <input id="musicVolume" class="volume-slider" type="range" min="0" max="1" step="0.01" value="0.25" aria-label="Music volume">
+        <label for="modeSelect" class="sr-only">Game mode</label>
+        <select id="modeSelect" aria-label="Game mode" title="Game mode">
+            <option value="two-player">Two Player</option>
+            <option value="single-player">Single Player</option>
+        </select>
+        <label for="aiDifficulty" class="sr-only">AI difficulty</label>
+        <select id="aiDifficulty" aria-label="AI difficulty" title="AI difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+        <label for="playerSide" class="sr-only">Choose side</label>
+        <select id="playerSide" aria-label="Choose your side" title="Choose your side">
+            <option value="X">Play as X (go first)</option>
+            <option value="O">Play as O (go second)</option>
+        </select>
+        <label for="starterSelect" class="sr-only">Who starts</label>
+        <select id="starterSelect" aria-label="Who starts" title="Who starts">
+            <option value="human">Human starts</option>
+            <option value="ai">AI starts</option>
+        </select>
+    </div>
+
+    <main class="game-container">
+        <div class="game-card">
+            <h1 class="game-title">Tic Tac Toe</h1>
+            <p class="game-subtitle">Play against a friend! First to get 3 in a row wins!</p>
+
+            <div class="score-board">
+                <div class="score-item">
+                    <div class="score-label">Player 1</div>
+                    <div class="score-value" id="scoreX">0</div>
+                </div>
+                <div class="score-item">
+                    <div class="score-label">Player 2</div>
+                    <div class="score-value" id="scoreO">0</div>
+                </div>
+                <div class="score-item">
+                    <div class="score-label">Draws</div>
+                    <div class="score-value" id="scoreDraw">0</div>
+                </div>
+            </div>
+
+            <div class="current-player" id="currentPlayer">Player 1's Turn</div>
+            <div class="game-message" id="gameMessage"></div>
+            <div id="ariaLive" class="sr-only" aria-live="polite"></div>
+
+            <div class="game-board" id="gameBoard" role="grid" aria-label="Tic Tac Toe board">
+                <div class="cell" data-index="0" role="button" tabindex="0" aria-label="Cell 1, empty"></div>
+                <div class="cell" data-index="1" role="button" tabindex="0" aria-label="Cell 2, empty"></div>
+                <div class="cell" data-index="2" role="button" tabindex="0" aria-label="Cell 3, empty"></div>
+                <div class="cell" data-index="3" role="button" tabindex="0" aria-label="Cell 4, empty"></div>
+                <div class="cell" data-index="4" role="button" tabindex="0" aria-label="Cell 5, empty"></div>
+                <div class="cell" data-index="5" role="button" tabindex="0" aria-label="Cell 6, empty"></div>
+                <div class="cell" data-index="6" role="button" tabindex="0" aria-label="Cell 7, empty"></div>
+                <div class="cell" data-index="7" role="button" tabindex="0" aria-label="Cell 8, empty"></div>
+                <div class="cell" data-index="8" role="button" tabindex="0" aria-label="Cell 9, empty"></div>
+            </div>
+
+            <!-- AI thinking indicator (shown briefly when AI is deciding) -->
+            <div id="aiThinking" class="ai-thinking" aria-hidden="true">
+                <div class="small-spinner" aria-hidden="true"></div>
+                <div class="ai-text">AI is thinking…</div>
+            </div>
+
+            <div class="game-controls">
+                <button class="button" id="resetBtn">New Game</button>
+                <button class="button secondary" id="resetScoreBtn">Reset Score</button>
+            </div>
+
+            <!-- Optional audio (if you add mp3s to /videos, they'll play) -->
+            <audio id="bgAudio" loop preload="auto" src="videos/game-minecraft-gaming-background-music-402451.mp3"></audio>
+            <audio id="moveSound" preload="auto" src="videos/game-start-317318.mp3"></audio>
+            <audio id="clickSound" preload="auto" src="videos/8-bit-video-game-points-version-1-145826.mp3"></audio>
+            <audio id="winSound" preload="auto" src="videos/game-over-arcade-6435.mp3"></audio>
+        </div>
+    </main>
+
+    <!-- Game logic -->
+    <script defer src="js/game.js"></script>
+</body>
+</html>
